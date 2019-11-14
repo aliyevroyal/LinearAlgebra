@@ -35,6 +35,23 @@ class LinearAlgebra {
     }
 
     /**
+     * addMatrices Method Starts, Add Two Matrices
+     */
+    public ArrayList<ArrayList<Double>> addMatrices(ArrayList<ArrayList<Double>> firstMatrixArraylist, ArrayList<ArrayList<Double>> secondMatrixArraylist) {
+        ArrayList<ArrayList<Double>> additionProductMatrixArrayList = new ArrayList<>();
+        ArrayList<Double> additionProductVectorArrayList = new ArrayList<>();
+
+        for (int firstCounter = 0; firstCounter < firstMatrixArraylist.size(); firstCounter = firstCounter + 1) {
+            for (int secondCounter = 0; secondCounter < firstMatrixArraylist.get(firstCounter).size(); secondCounter = secondCounter + 1) {
+                additionProductVectorArrayList.add(firstMatrixArraylist.get(firstCounter).get(secondCounter) + secondMatrixArraylist.get(firstCounter).get(secondCounter));
+            }
+            additionProductMatrixArrayList.add(additionProductVectorArrayList);
+            additionProductVectorArrayList = new ArrayList<>();
+        }
+        return additionProductMatrixArrayList;
+    }
+
+    /**
      * MultiplyMatrices Method Starts, Multiply Two Matrices with Different Dimensions
      */
     public ArrayList<ArrayList<Double>> multiplyMatrices(ArrayList<ArrayList<Double>> firstMatrixArraylist, ArrayList<ArrayList<Double>> secondMatrixArraylist) {
@@ -84,10 +101,38 @@ class LinearAlgebra {
         }
     }
 
+    public ArrayList<ArrayList<Double>> multiplyElementWise(ArrayList<ArrayList<Double>> firstMatrixArraylist, ArrayList<ArrayList<Double>> secondMatrixArraylist) {
+        ArrayList<ArrayList<Double>> multiplicationMatrixArrayList = new ArrayList<>();
+        ArrayList<Double> multiplicationVectorArrayList = new ArrayList<>();
+
+        for (int firstCounter = 0; firstCounter < firstMatrixArraylist.size(); firstCounter = firstCounter + 1) {
+            for (int secondCounter = 0; secondCounter < firstMatrixArraylist.get(firstCounter).size(); secondCounter = secondCounter + 1) {
+                multiplicationVectorArrayList.add(secondCounter, firstMatrixArraylist.get(firstCounter).get(secondCounter) * secondMatrixArraylist.get(firstCounter).get(secondCounter));
+            }
+            multiplicationMatrixArrayList.add(multiplicationVectorArrayList);
+            multiplicationVectorArrayList = new ArrayList<>();
+        }
+        return multiplicationMatrixArrayList;
+    }
+
+    /**
+     * MultiplyMatrixByNumber Method Starts, Multiply Matrix with Number
+     */
+    public ArrayList<ArrayList<Double>> multiplyMatrixByNumber(ArrayList<ArrayList<Double>> matrixArrayList,
+                                                               double multiplier) {
+        for (int firstCounter = 0; firstCounter < matrixArrayList.size(); firstCounter = firstCounter + 1) {
+            for (int secondCOunter = 0; secondCOunter < matrixArrayList.get(firstCounter).size(); secondCOunter = secondCOunter + 1) {
+                matrixArrayList.get(firstCounter).set(secondCOunter, matrixArrayList.get(firstCounter).get(secondCOunter) * multiplier);
+            }
+        }
+        return matrixArrayList;
+    }
+
     /**
      * FindMod26Matrix Method Starts, Finds All Mod 26 of All Elements of Matrix
      */
-    public ArrayList<ArrayList<Double>> findRemainder(ArrayList<ArrayList<Double>> matrixArrayList, double divider) {
+    public ArrayList<ArrayList<Double>> findRemainder(ArrayList<ArrayList<Double>> matrixArrayList,
+                                                      double divider) {
         for (int firstCounter = 0; firstCounter < matrixArrayList.size(); firstCounter = firstCounter + 1) {
             for (int secondCounter = 0; secondCounter < matrixArrayList.get(firstCounter).size(); secondCounter = secondCounter + 1) {
                 if (matrixArrayList.get(firstCounter).get(secondCounter) % divider < 0) {
@@ -234,7 +279,8 @@ class LinearAlgebra {
     /**
      * Creates and Initializes Random Matrix
      */
-    public ArrayList<ArrayList<Double>> initializeRandomMatrix(int theNumberOfRows, int theNumberOfColumns, int minRange, int maxRange) {
+    public ArrayList<ArrayList<Double>> initializeRandomMatrix(int theNumberOfRows, int theNumberOfColumns,
+                                                               int minRange, int maxRange) {
         Random random = new Random();
         ArrayList<ArrayList<Double>> randomMatrixArrayList = new ArrayList<>();
         ArrayList<Double> randomVectorArrayList = new ArrayList<>();
