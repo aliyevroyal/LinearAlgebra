@@ -8,12 +8,30 @@
 package com.elecdrones;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 class LinearAlgebra {
     /**
      * Constructor with 0 Argument
      */
     public LinearAlgebra() {
+    }
+
+    /**
+     * subtractMatrices Method Starts, Subtract Two Matrices
+     */
+    public ArrayList<ArrayList<Double>> subtractMatrices(ArrayList<ArrayList<Double>> firstMatrixArraylist, ArrayList<ArrayList<Double>> secondMatrixArraylist) {
+        ArrayList<ArrayList<Double>> subtractionProductMatrixArrayList = new ArrayList<>();
+        ArrayList<Double> subtractionProductVectorArrayList = new ArrayList<>();
+
+        for (int firstCounter = 0; firstCounter < firstMatrixArraylist.size(); firstCounter = firstCounter + 1) {
+            for (int secondCounter = 0; secondCounter < firstMatrixArraylist.get(firstCounter).size(); secondCounter = secondCounter + 1) {
+                subtractionProductVectorArrayList.add(firstMatrixArraylist.get(firstCounter).get(secondCounter) - secondMatrixArraylist.get(firstCounter).get(secondCounter));
+            }
+            subtractionProductMatrixArrayList.add(subtractionProductVectorArrayList);
+            subtractionProductVectorArrayList = new ArrayList<>();
+        }
+        return subtractionProductMatrixArrayList;
     }
 
     /**
@@ -31,13 +49,13 @@ class LinearAlgebra {
         for (int counter = 0; counter < firstMatrixArraylist.size(); counter = counter + 1)
             theNumberOfRowsInFirstMatrixArraylist = theNumberOfRowsInFirstMatrixArraylist + 1;
 
-        for (int counter = 0; counter < firstMatrixArraylist.get(1).size(); counter = counter + 1)
+        for (int counter = 0; counter < firstMatrixArraylist.get(0).size(); counter = counter + 1)
             theNumberOfColumnsInFirstMatrixArraylist = theNumberOfColumnsInFirstMatrixArraylist + 1;
 
         for (int counter = 0; counter < secondMatrixArraylist.size(); counter = counter + 1)
             theNumberOfRowsInSecondMatrixArraylist = theNumberOfRowsInSecondMatrixArraylist + 1;
 
-        for (int counter = 0; counter < secondMatrixArraylist.get(1).size(); counter = counter + 1)
+        for (int counter = 0; counter < secondMatrixArraylist.get(0).size(); counter = counter + 1)
             theNumberOfColumnsInSecondMatrixArraylist = theNumberOfColumnsInSecondMatrixArraylist + 1;
 
         if (theNumberOfColumnsInFirstMatrixArraylist != theNumberOfRowsInSecondMatrixArraylist) {
@@ -180,5 +198,56 @@ class LinearAlgebra {
                 }
             }
         }
+    }
+
+    /**
+     * Find Transpose of Matrix
+     */
+    public ArrayList<ArrayList<Double>> transposeMatrix(ArrayList<ArrayList<Double>> matrixArrayList) {
+        double[][] matrixArray = new double[matrixArrayList.size()][matrixArrayList.get(0).size()];
+        double[][] transposedMatrixArray = new double[matrixArray[0].length][matrixArray.length];
+        ArrayList<ArrayList<Double>> transposedMatrixArrayList = new ArrayList<>();
+        ArrayList<Double> transposedVectorArrayList = new ArrayList<>();
+
+        for (int firstCounter = 0; firstCounter < matrixArrayList.size(); firstCounter++) {
+            for (int secondCounter = 0; secondCounter < matrixArrayList.get(firstCounter).size(); secondCounter++) {
+                matrixArray[firstCounter][secondCounter] = matrixArrayList.get(firstCounter).get(secondCounter);
+            }
+        }
+
+        for (int firstCounter = 0; firstCounter < matrixArray.length; firstCounter = firstCounter + 1) {
+            for (int secondCounter = 0; secondCounter < matrixArray[0].length; secondCounter = secondCounter + 1) {
+                transposedMatrixArray[secondCounter][firstCounter] = matrixArray[firstCounter][secondCounter];
+            }
+        }
+
+        for (int firstCounter = 0; firstCounter < transposedMatrixArray.length; firstCounter++) {
+            for (int secondCounter = 0; secondCounter < transposedMatrixArray[firstCounter].length; secondCounter++) {
+                transposedVectorArrayList.add(transposedMatrixArray[firstCounter][secondCounter]);
+            }
+            transposedMatrixArrayList.add(transposedVectorArrayList);
+            transposedVectorArrayList = new ArrayList<>();
+        }
+        return transposedMatrixArrayList;
+    }
+
+    /**
+     * Creates and Initializes Random Matrix
+     */
+    public ArrayList<ArrayList<Double>> initializeRandomMatrix(int theNumberOfRows, int theNumberOfColumns, int minRange, int maxRange) {
+        Random random = new Random();
+        ArrayList<ArrayList<Double>> randomMatrixArrayList = new ArrayList<>();
+        ArrayList<Double> randomVectorArrayList = new ArrayList<>();
+        double randomValue;
+
+        for (int firstCounter = 0; firstCounter < theNumberOfRows; firstCounter = firstCounter + 1) {
+            for (int secondCounter = 0; secondCounter < theNumberOfColumns; secondCounter = secondCounter + 1) {
+                randomValue = minRange + (maxRange - minRange) * random.nextDouble();
+                randomVectorArrayList.add(randomValue);
+            }
+            randomMatrixArrayList.add(randomVectorArrayList);
+            randomVectorArrayList = new ArrayList<>();
+        }
+        return randomMatrixArrayList;
     }
 }
